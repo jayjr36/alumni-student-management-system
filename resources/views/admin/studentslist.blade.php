@@ -12,12 +12,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($students as $student)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $student->name }}</td>
-                    <!-- Add more columns as needed -->
-                </tr>
+                @foreach ($students as $student)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $student->name }}</td>
+                        <!-- Add more columns as needed -->
+                    </tr>
                 @endforeach
             </tbody>
         </table>

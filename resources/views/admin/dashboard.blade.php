@@ -6,6 +6,9 @@
         <h3>Admin Dashboard</h3>
         <ul class="nav flex-column">
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('posts.index') }}" target="iframe_content">Newsfeed</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('students.index') }}" target="iframe_content">Students</a>
             </li>
             <li class="nav-item">
@@ -17,7 +20,20 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('alumni.create') }}" target="iframe_content">Add Alumni</a>
             </li>
-            <!-- Add more sidebar links as needed -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('post.create') }}" target="iframe_content">Post to Newsfeed</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+      
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+              </li>
         </ul>
     </div>
 

@@ -26,7 +26,7 @@ class StudentController extends Controller
 
         Student::create($request->all());
 
-        return redirect()->route('admin.studentslist')->with('success', 'Student added successfully');
+        return redirect()->route('students.create')->with('success', 'Student added successfully');
 
     }
 }

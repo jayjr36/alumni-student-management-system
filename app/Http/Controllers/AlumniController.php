@@ -21,12 +21,12 @@ class AlumniController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:alumni|max:255',
+            'name' => 'required',
         ]);
 
         Alumni::create($request->all());
 
-        return redirect()->route('admin.alumnilist')
+        return redirect()->route('alumni.create')
             ->with('success', 'Alumni added successfully');
     }
 }
