@@ -39,6 +39,33 @@
           background-color: #0056b3;
           border-color: #0056b3;
         }
+        /* Message container style */
+.message {
+    margin-bottom: 10px;
+    max-width: 80%; /* Adjust the maximum width as needed */
+    padding: 8px;
+    border-radius: 8px;
+    clear: both; /* Clear floats */
+}
+
+/* Sent message style */
+.sent {
+    background-color: #DCF8C6; /* Change to desired color */
+    float: left; /* Align sent messages to the left */
+}
+
+/* Received message style */
+.received {
+    background-color: #EDEDED; /* Change to desired color */
+    float: right; /* Align received messages to the right */
+}
+
+/* Message content style */
+.message-content {
+    padding: 5px 10px;
+    word-wrap: break-word;
+}
+
       </style>  
 </head>
 <body>

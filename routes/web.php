@@ -46,3 +46,5 @@ Route::get('/chat', [ChatController::class, 'index'])->name('chat');
 
 Route::get('/send-message', [ChatController::class, 'sendMessage'])->name('send-message');
 Route::get('/receive-message', [ChatController::class, 'receiveMessage'])->name('receive-message');
+
+Route::get('/fetch-messages', [ChatController::class, 'fetchMessages'])->name('fetch-messages');
