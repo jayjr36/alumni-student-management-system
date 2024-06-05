@@ -1,23 +1,20 @@
 @extends('layout')
 
 @section('content')
-<div>
-    <h1>Chat Interface</h1>
-    <div class="card">
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Chat Interface</h1>
+    <div class="card shadow-sm">
         <div class="card-body">
-            <div id="chat-messages">
+            <div id="chat-messages" class="mb-3" style="height: 300px; overflow-y: auto; border: 1px solid #dee2e6; border-radius: .25rem; padding: 1rem;">
                 <!-- Chat messages will be displayed here -->
             </div>
-             
-    <form method="GET" id="chat-form">
-        <input type="text" id="message-input" placeholder="Type your message">
-        <button type="submit">Send</button>
-    </form>
+            <form method="GET" id="chat-form" class="d-flex">
+                <input type="text" id="message-input" class="form-control mr-2" placeholder="Type your message">
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
         </div>
-
     </div>
 </div>
-    
 
 
     <script>

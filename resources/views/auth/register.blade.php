@@ -61,13 +61,19 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                        <div class="row justify-content-center">
+                            <div class="col-6 d-flex justify-content-center px-5 mb-0">
+                                <div class="col-md-12 px-5">
+                                <button type="submit" class="btn btn-success btn-sm w-100">
                                     {{ __('Register') }}
                                 </button>
                             </div>
                         </div>
+                        </div>
+                        <div class="row text-center">
+                            <a href="{{route('login')}}" >Signin to your account</a>
+                        </div>
+
                     </form>
                 </div>
             </div>

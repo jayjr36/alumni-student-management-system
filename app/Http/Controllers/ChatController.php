@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -55,6 +56,23 @@ class ChatController extends Controller
     })->get();
 
     return response()->json(['messages' => $messages]);
+}
+
+public function recentContacts()
+{
+    $userId = Auth::id();
+
+    $recentContacts = Message::where('sender_id', $userId)
+        ->orWhere('receiver_id', $userId)
+        ->with('sender', 'receiver')
+        ->get()
+        ->map(function ($message) use ($userId) {
+            return $message->sender_id === $userId ? $message->receiver : $message->sender;
+        })
+        ->unique('id')
+        ->values();
+
+    return view('recent-contacts', compact('recentContacts'));
 }
 
 }
