@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('content')
-<div class="container-fluid bg-dark text-white" style="height: 100vh;">
-        <h2 class="display-5 text-center fw-bold">Post to Newsfeed</h2>
+<div class="container-fluid " style="height: 100vh;">
+        <h3 class="display-5 text-center fw-bold">Post to Newsfeed</h3>
 
         @if (session('success'))
             <div class="alert alert-success">

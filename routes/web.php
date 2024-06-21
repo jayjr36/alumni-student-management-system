@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\InteractionController;
@@ -23,6 +24,10 @@ Route::get('/admin', function () {
 Route::get('/landingpage', function () {
     return view('landingpage');
 })->name('landingpage');
+
+Route::get('/adminhome', function () {
+    return view('admin.adminhome');
+})->name('adminhome');
 
 Route::get('/students', [StudentController::class, 'index'])->name('students.index');
 Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
@@ -68,3 +73,12 @@ Route::post('/mentorship-requests', [MentorshipRequestController::class, 'store'
 Route::get('/new/mentorship-requests', [MentorshipRequestController::class, 'index'])->name('mentorship_requests.new');
 Route::post('/mentorship-requests/{mentorshipRequest}/accept', [MentorshipRequestController::class, 'accept'])->name('mentorship_requests.accept');
 Route::post('/mentorship-requests/{mentorshipRequest}/reject', [MentorshipRequestController::class, 'reject'])->name('mentorship_requests.reject');
+
+// routes/web.php
+Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
+Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
+Route::put('/forum/{post}', [ForumController::class, 'update'])->name('forum.update');
+Route::delete('/forum/{post}', [ForumController::class, 'destroy'])->name('forum.destroy');
+
+Route::get('/forum/fetch-messages', [ForumController::class, 'fetchMessages'])->name('forum.fetch-messages');
+

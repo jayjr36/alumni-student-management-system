@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container col-5 mt-4">
-        <h1 class="text-center">User Search</h1>
+        <h3 class="text-center">User Search</h3>
         <form action="{{ route('search') }}" method="GET" class="form-inline justify-content-center mb-4">
             <div class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="Search for users">
@@ -13,7 +13,7 @@
         </form>
 
         @if(isset($users))
-            <h2 class="col-5 text-center">Search Results</h2>
+            <h3 class="col-5 text-center">Search Results</h3>
             <ul class="list-group">
                 @foreach($users as $user)
                     <li class="list-group-item d-flex justify-content-between align-items-center">

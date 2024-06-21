@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-<div class="container-fluid bg-dark text-white" style="height: 100vh;">
+<div class="container-fluid " style="height: 100vh;">
         <div class="container h-100 mt-5">
             <div class="row h-100 justify-content-center align-items-center">
                 <div class="col-10 col-md-8 col-lg-6">

@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('content')
-    <div class="container-fluid bg-dark text-white" style="height: 100vh">
-        <h1>Alumni List</h1>
+    <div class="container-fluid " style="height: 100vh">
+        <h1 class="text-center">Alumni List</h1>
         <table class="table table-striped">
             <thead>
                 <tr>

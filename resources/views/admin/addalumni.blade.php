@@ -2,7 +2,7 @@
 @extends('layout')
 
 @section('content')
-    <div class="container-fluid bg-dark text-white" style="height: 100vh">
+    <div class="container-fluid " style="height: 100vh">
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="card bg-dark text-white py-5">
