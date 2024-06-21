@@ -9,4 +9,10 @@ class Alumni extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
+
+    public function mentorshipRequests()
+{
+    return $this->hasMany(MentorshipRequest::class);
+}
+
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained('users');
             $table->foreignId('mentorship_offer_id')->constrained('mentorship_offers');
+            $table->string('accepted')->nullable();
             $table->timestamps();
         });
     }

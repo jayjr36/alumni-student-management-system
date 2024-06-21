@@ -45,4 +45,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+ // Assuming the User model already exists
+public function mentorshipRequests()
+{
+    return $this->hasMany(MentorshipRequest::class, 'student_id');
+}
+
+public function mentorshipOffers()
+{
+    return $this->hasMany(MentorshipOffer::class, 'alumni_id');
+}
+
+
 }

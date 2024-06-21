@@ -13,14 +13,20 @@
                         @foreach ($mentorshipRequests as $mentorshipRequest)
                             <li class="list-group-item">
                                 <span>{{ $mentorshipRequest->student->name }} requested mentorship on "{{ $mentorshipRequest->mentorshipOffer->title }}"</span>
-                                <form action="{{ route('mentorship_requests.accept', $mentorshipRequest) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success btn-sm mx-2">Accept</button>
-                                </form>
-                                <form action="{{ route('mentorship_requests.reject', $mentorshipRequest) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-                                </form>
+                                @if (is_null($mentorshipRequest->accepted))
+                                    <form action="{{ route('mentorship_requests.accept', $mentorshipRequest) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success btn-sm mx-2">Accept</button>
+                                    </form>
+                                    <form action="{{ route('mentorship_requests.reject', $mentorshipRequest) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                    </form>
+                                @elseif ($mentorshipRequest->accepted === 'true')
+                                    <span class="badge bg-success">Accepted</span>
+                                @elseif ($mentorshipRequest->accepted === 'false')
+                                    <span class="badge bg-danger">Rejected</span>
+                                @endif
                             </li>
                         @endforeach
                     </ul>

@@ -35,12 +35,14 @@ public function accept(MentorshipRequest $mentorshipRequest)
     $mentorshipRequest->accepted = true;
     $mentorshipRequest->save();
 
-    return redirect()->route('mentorship_requests.index')->with('success', 'Request accepted.');
+    return redirect()->route('mentorship_requests.new')->with('success', 'Request accepted.');
 }
 
 public function reject(MentorshipRequest $mentorshipRequest)
 {
-    $mentorshipRequest->delete();
+    $mentorshipRequest->accepted = false;
+    $mentorshipRequest->save();
+  //  $mentorshipRequest->delete();
 
     return redirect()->route('mentorship_requests.index')->with('success', 'Request rejected.');
 }
