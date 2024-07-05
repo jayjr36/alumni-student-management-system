@@ -110,6 +110,37 @@
             </div>
         </div>
     </div>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-person-plus display-1 text-secondary"></i>
+                    <h5 class="card-title mt-3">Mentorship Requests</h5>
+                    <p class="card-text">Manage mentorship requests from alumni and students.</p>
+                    <a href="{{ route('admin.mentor.requests') }}" class="btn btn-secondary">View Requests</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-box-arrow-right display-1 text-secondary"></i>
+                    <h5 class="card-title mt-3">Logout</h5>
+                    <p class="card-text">Sign out of your account securely.</p>
+                    <a href="{{ route('logout') }}" class="btn btn-secondary"
+                       onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

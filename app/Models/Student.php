@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'regNumber', 'year', 'major', 'bio'];
+
+    public function mentors()
+    {
+        return $this->belongsToMany(Alumni::class, 'mentor_mentee', 'student_id', 'mentor_id')->withPivot('status');
+    }
 }

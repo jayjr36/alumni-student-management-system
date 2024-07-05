@@ -24,6 +24,10 @@
                                 <label for="name">Name</label>
                                 <input id="name" type="text" class="form-control" name="name" required autofocus>
                             </div>
+                            <div class="form-group">
+                                <label for="regNumber">Registration Number</label>
+                                <input id="regNumber" type="text" class="form-control" name="regNumber" required autofocus>
+                            </div>
                             <div class="row px-3 py-3">
                                 <button type="submit" class="btn btn-primary">Add</button>
                             </div>

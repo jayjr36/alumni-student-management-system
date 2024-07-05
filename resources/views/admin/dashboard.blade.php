@@ -35,6 +35,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link text-dark" href="{{ route('admin.mentor.requests') }}" target="iframe_content">
+                <i class="bi bi-person-plus"></i> Mentorship Requests
+            </a>
+        </li>
+        
+        <li class="nav-item">
             <a class="nav-link text-dark" href="{{ route('logout') }}"
                onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">

@@ -10,7 +10,8 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\InteractionController;
 use App\Http\Controllers\MentorshipOfferController;
 use App\Http\Controllers\MentorshipRequestController;
-
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -82,3 +83,27 @@ Route::delete('/forum/{post}', [ForumController::class, 'destroy'])->name('forum
 
 Route::get('/forum/fetch-messages', [ForumController::class, 'fetchMessages'])->name('forum.fetch-messages');
 
+Route::get('/alumni/{id}', [ProfileController::class, 'showAlumni'])->name('alumni_profile');
+Route::get('/student/{id}', [ProfileController::class, 'showStudent'])->name('student_profile');
+
+
+// New routes for mentor requests and mentorship management
+Route::post('/alumni/{id}/request-mentor', [ProfileController::class, 'requestMentor'])->name('request.mentor');
+Route::post('/admin/mentor-requests/{id}/approve', [ProfileController::class, 'approveMentorRequest'])->name('approve.mentor.request');
+Route::post('/admin/mentor-requests/{id}/reject', [ProfileController::class, 'rejectMentorRequest'])->name('reject.mentor.request');
+Route::post('/mentorship/{mentor_id}/{student_id}/request', [ProfileController::class, 'requestMentorship'])->name('request.mentorship');
+Route::post('/mentorship/{mentor_id}/{student_id}/respond/{response}', [ProfileController::class, 'respondMentorshipRequest'])->name('respond.mentorship');
+
+Route::get('/all/admin/mentor-requests', [AdminController::class, 'mentorRequests'])->name('admin.mentor.requests');
+Route::post('/admin/mentor-requests/{id}/approve', [AdminController::class, 'approveMentorRequest'])->name('approve.mentor.request');
+Route::post('/admin/mentor-requests/{id}/reject', [AdminController::class, 'rejectMentorRequest'])->name('reject.mentor.request');
+
+
+Route::get('/alumni/profile', [AlumniController::class, 'showProfile'])->name('alumni.profile');
+Route::get('/alumni/profile/edit', [AlumniController::class, 'editProfileForm'])->name('alumni.profile.edit');
+Route::put('/alumni/profile/update', [AlumniController::class, 'updateProfile'])->name('alumni.profile.update');
+
+
+Route::get('/student/profile', [StudentController::class, 'showProfile'])->name('student.profile');
+Route::get('/student/profile/edit', [StudentController::class, 'editProfileForm'])->name('student.profile.edit');
+Route::put('/student/profile/update', [StudentController::class, 'updateProfile'])->name('student.profile.update');

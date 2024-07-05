@@ -17,9 +17,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('interaction') }}" target="content-iframe">Interaction</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('mentorship') }}" target="content-iframe">Mentorship</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('recent.contacts') }}" target="content-iframe">Chat</a>
                         </li>
@@ -29,6 +29,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('forum.index') }}" target="content-iframe">Forum</a>
                         </li>
+                        @if (auth()->user()->role == 'alumni')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('alumni_profile', ['id' => auth()->user()->guest_id]) }}" target="content-iframe">Profile</a>
+                        </li>
+                        @elseif (auth()->user()->role == 'student')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('student_profile', ['id' => auth()->user()->guest_id]) }}" target="content-iframe">Profile</a>
+                        </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

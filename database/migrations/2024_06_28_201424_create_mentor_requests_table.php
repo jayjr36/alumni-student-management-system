@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('mentor_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->nullable();
-            $table->string('regNumber')->nullable();
-            $table->string('year')->nullable();
-            $table->string('major')->nullable();
-            $table->text('bio')->nullable();
+            $table->foreignId('alumni_id')
+                  ->constrained('alumni')
+                  ->onDelete('cascade')->name('mentor_request_alumni_id');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('mentor_requests');
     }
 };

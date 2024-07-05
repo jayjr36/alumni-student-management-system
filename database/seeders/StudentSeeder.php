@@ -17,26 +17,31 @@ class StudentSeeder extends Seeder
     public function run(): void
     {
         $students = [
-            ['name' => 'John Doe'],
-            ['name' => 'Jane Smith'],
-            ['name' => 'Alice Johnson'],
-            ['name' => 'Bob Brown'],
+            ['name' => 'John Doe', 'regNumber' => 'STU001'],
+            ['name' => 'Jane Smith', 'regNumber' => 'STU002'],
+            ['name' => 'Alice Johnson', 'regNumber' => 'STU003'],
+            ['name' => 'Bob Brown', 'regNumber' => 'STU004'],
         ];
 
         foreach ($students as $studentData) {
             $firstName = Str::before($studentData['name'], ' ');
             $email = Str::lower($firstName) . '@gmail.com';
 
+             $student = Student::create([
+                'name' => $studentData['name'],
+                'regNumber' => $studentData['regNumber'],
+               // 'user_id' => $user->id // assuming you have a user_id field to link with the User model
+            ]);
+
             $user = User::create([
                 'name' => $studentData['name'],
                 'email' => $email,
                 'password'=> Hash::make('12345678'),
-                'role' => 'student'
+                'role' => 'student',
+                'guest_id'=> $student->id
             ]);
 
-            Student::create([
-                'name' => $studentData['name'],
-            ]);
+            
         }
     }
 }

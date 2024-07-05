@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use Illuminate\Support\Facades\Auth;
 class RegisterController extends Controller
 {
     /*
@@ -32,6 +32,16 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/home';
 
+
+
+    protected function redirectTo()
+    {
+        if (Auth::user()->role == 'admin') {
+            return '/adminhome'; 
+        } else {
+            return '/home'; 
+        }
+    }
     /**
      * Create a new controller instance.
      *
@@ -73,19 +83,15 @@ class RegisterController extends Controller
         }
     
         $userRole = $student ? 'student' : 'alumni';
-
-    
-        if ($student) {
-            $userRole = 'student';
-        } elseif ($alumni) {
-            $userRole = 'alumni';
-        }
+        $guestId = $student ? $student->id : ($alumni ? $alumni->id : null);
     
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => $userRole,
+            'guest_id' => $guestId,
         ]);
     }
+    
 }

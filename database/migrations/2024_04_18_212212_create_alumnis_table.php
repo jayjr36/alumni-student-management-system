@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('alumnis', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('regNumber')->nullable();
+            $table->string('email')->nullable();
+            $table->string('graduation_year')->nullable();
+            $table->string('degree')->nullable();
+            $table->text('bio')->nullable();
             $table->timestamps();
         });
     }
