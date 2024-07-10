@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Alumni;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+
 class AlumniController extends Controller
 {
     public function index()
@@ -40,14 +42,35 @@ class AlumniController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $alumni = Alumni::where('id', Auth::user()->guest_id)->firstOrFail(); // Fetch alumni by ID
-    
-        $alumni->update([
-            'graduation_year' => $request->input('graduation_year'),
-            'degree' => $request->input('degree'),
-            'bio' => $request->input('bio'),
+        $request->validate([
+            'graduation_year' => 'required|string|max:4',
+            'degree' => 'required|string|max:255',
+            'bio' => 'required|string',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+    
+        $alumni = Alumni::where('id', Auth::user()->guest_id)->firstOrFail();
+    
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/profile_pictures'), $filename);
+    
+            // If there was an old profile picture, delete it
+            if ($alumni->profile_picture) {
+                File::delete(public_path('images/profile_pictures/' . $alumni->profile_picture));
+            }
+    
+            // Save new profile picture filename
+            $alumni->profile_picture = $filename;
+        }
+    
+        $alumni->graduation_year = $request->input('graduation_year');
+        $alumni->degree = $request->input('degree');
+        $alumni->bio = $request->input('bio');
+        $alumni->save();
     
         return redirect()->route('alumni_profile')->with('success', 'Profile updated successfully.');
     }
+    
 }

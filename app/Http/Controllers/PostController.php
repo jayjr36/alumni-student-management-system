@@ -18,23 +18,29 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|string',
             'body' => 'required|string',
-
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Add validation for the image
         ]);
-
+    
         try {
-            // Create and save the item
+            // Handle the file upload
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imagePath = $image->store('images', 'public');
+            }
+    
+            // Create and save the post
             Post::create([
                 'title' => $request->input('title'),
                 'body' => $request->input('body'),
+                'image' => $imagePath,
             ]);
-
+    
             return redirect()->route('post.create')->with('success', 'Post added successfully!');
         } catch (\Exception $e) {
-
             return redirect()->route('post.create')->with('error', 'Failed to add post. Please try again.');
         }
     }
-
+    
     public function index()
     {
       $posts = Post::all();

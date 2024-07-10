@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('regNumber')->nullable();
             $table->string('email')->nullable();
             $table->string('graduation_year')->nullable();
+            $table->string('profile_picture')->nullable();
             $table->string('degree')->nullable();
             $table->text('bio')->nullable();
             $table->timestamps();

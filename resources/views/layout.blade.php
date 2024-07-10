@@ -1,73 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js">
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         /* Custom styles */
         .jumbotron {
-          background-color: #007bff;
-          color: white;
-          padding: 4rem 2rem;
-          margin-bottom: 0;
+            background-color: #007bff;
+            color: white;
+            padding: 4rem 2rem;
+            margin-bottom: 0;
         }
+
         .feature-icon {
-          font-size: 4rem;
-          color: #007bff;
+            font-size: 4rem;
+            color: #007bff;
         }
+
         .feature-text {
-          color: #007bff;
+            color: #007bff;
         }
+
         .feature-box {
-          padding: 3rem;
-          border-radius: 10px;
-          background-color: #f8f9fa;
+            padding: 3rem;
+            border-radius: 10px;
+            background-color: #f8f9fa;
         }
+
         .feature-box:hover {
-          background-color: #e9ecef;
+            background-color: #e9ecef;
         }
+
         .btn-primary {
-          background-color: #007bff;
-          border-color: #007bff;
+            background-color: #007bff;
+            border-color: #007bff;
         }
+
         .btn-primary:hover {
-          background-color: #0056b3;
-          border-color: #0056b3;
+            background-color: #0056b3;
+            border-color: #0056b3;
         }
+
         /* Message container style */
-.message {
-    margin-bottom: 10px;
-    max-width: 80%; /* Adjust the maximum width as needed */
-    padding: 8px;
-    border-radius: 8px;
-    clear: both; /* Clear floats */
-}
+        .message {
+            margin-bottom: 10px;
+            max-width: 80%;
+            /* Adjust the maximum width as needed */
+            padding: 8px;
+            border-radius: 8px;
+            clear: both;
+            /* Clear floats */
+        }
 
-/* Sent message style */
-.sent {
-    background-color: #DCF8C6; /* Change to desired color */
-    float: left; /* Align sent messages to the left */
-}
+        /* Sent message style */
+        .sent {
+            background-color: #DCF8C6;
+            /* Change to desired color */
+            float: left;
+            /* Align sent messages to the left */
+        }
 
-/* Received message style */
-.received {
-    background-color: #EDEDED; /* Change to desired color */
-    float: right; /* Align received messages to the right */
-}
+        /* Received message style */
+        .received {
+            background-color: #EDEDED;
+            /* Change to desired color */
+            float: right;
+            /* Align received messages to the right */
+        }
 
-/* Message content style */
-.message-content {
-    padding: 5px 10px;
-    word-wrap: break-word;
-}
-
-      </style>  
+        /* Message content style */
+        .message-content {
+            padding: 5px 10px;
+            word-wrap: break-word;
+        }
+    </style>
 </head>
+
 <body>
     @yield('content')
 
@@ -76,7 +92,12 @@
           <p>&copy; 2024 Student & Alumni Platform</p>
         </div>
       </footer> --}}
-    
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> --}}
+  </body>
+
 </html>

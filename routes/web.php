@@ -107,3 +107,6 @@ Route::put('/alumni/profile/update', [AlumniController::class, 'updateProfile'])
 Route::get('/student/profile', [StudentController::class, 'showProfile'])->name('student.profile');
 Route::get('/student/profile/edit', [StudentController::class, 'editProfileForm'])->name('student.profile.edit');
 Route::put('/student/profile/update', [StudentController::class, 'updateProfile'])->name('student.profile.update');
+
+Route::get('/student/mentorship/{id}', [ProfileController::class, 'studentMentors'])->name('student.mentorship');
+Route::get('/alumni/mentors/{id}', [ProfileController::class, 'alumniMentors'])->name('alumni.mentorship');

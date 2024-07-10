@@ -1,11 +1,11 @@
-@extends('layout')
+
+ @extends('layout')
 
 @section('content')
     <div class="container col-md-6">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Mentorship Requests</h5>
-
                 @if ($mentorshipRequests->isEmpty())
                     <p class="card-text">No mentorship requests.</p>
                 @else

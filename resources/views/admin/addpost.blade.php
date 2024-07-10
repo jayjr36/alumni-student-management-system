@@ -14,10 +14,9 @@
             <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
-        @endif
-        <form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
+        @endif<form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
             @csrf
-
+        
             <div class="card bg-dark text-white py-5">
                 <div class="col-md-8 offset-md-2">
                     <div class="col p-2">
@@ -25,17 +24,23 @@
                         <input type="text" class="form-control" aria-label="Title" name="title">
                     </div>
                 </div>
-
+        
                 <div class="col-md-8 offset-md-2">
                     <label for="body">Content</label>
                     <textarea class="form-control mx-auto p-2" id="body" name="body" style="height: 100px"></textarea>
                 </div>
+        
+                <div class="col-md-8 offset-md-2">
+                    <label for="image">Image</label>
+                    <input type="file" class="form-control" id="image" name="image">
+                </div>
+        
                 <div class="d-grid gap-2 col-6 mx-auto mt-5">
                     <button class="btn btn-primary" type="submit">CREATE POST</button>
                 </div>
             </div>
         </form>
-
+        
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>

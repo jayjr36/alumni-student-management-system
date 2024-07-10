@@ -17,9 +17,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('interaction') }}" target="content-iframe">Interaction</a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="{{ route('mentorship') }}" target="content-iframe">Mentorship</a>
-                        </li> --}}
+                        @if (auth()->check() && auth()->user()->role == 'student')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('student.mentorship', ['id' => auth()->user()->guest_id]) }}" target="content-iframe">Mentorship</a>
+                        </li>
+                        @endif
+                        @if (auth()->check() && auth()->user()->role == 'alumni')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('alumni.mentorship', ['id' => auth()->user()->guest_id]) }}" target="content-iframe">Mentorship</a>
+                        </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('recent.contacts') }}" target="content-iframe">Chat</a>
                         </li>

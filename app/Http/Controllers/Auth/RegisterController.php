@@ -62,6 +62,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'regNumber' => ['reauired', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -75,11 +76,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $student = Student::where('name', $data['name'])->first();
-        $alumni = Alumni::where('name', $data['name'])->first();
+        $student = Student::where('regNumber', $data['regNumber'])->first();
+        $alumni = Alumni::where('regNumber', $data['regNumber'])->first();
     
         if (!$student && !$alumni) {
-            throw new \Exception('User with this name does not exist.');
+            throw new \Exception('This student details do not exist.');
         }
     
         $userRole = $student ? 'student' : 'alumni';

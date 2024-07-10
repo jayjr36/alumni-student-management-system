@@ -12,7 +12,6 @@ class ProfileController extends Controller
 {
     public function showAlumni($id)
     {
-        
         $alumni = Alumni::findOrFail($id);
         $mentorRequest = MentorRequest::where('alumni_id', $id)->first();
         return view('profiles.alumni', compact('alumni', 'mentorRequest'));
@@ -24,6 +23,29 @@ class ProfileController extends Controller
         $mentors = $student->mentors()->wherePivot('status', 'accepted')->get();
         return view('profiles.student', compact('student', 'mentors'));
     }
+
+    // public function studentMentors($id){
+    //     $student = Student::findOrFail($id);
+    //     $mentors = $student->mentors()->wherePivot('status', 'accepted')->get();
+    //     return view('mentorship_offers.index', compact('student', 'mentors'));
+    // }
+
+    public function studentMentors($id)
+    {
+        $student = Student::findOrFail($id);
+        $mentors = \App\Models\Alumni::whereHas('mentorRequests', function ($query) {
+            $query->where('status', 'approved');
+        })->get();
+        return view('mentorship_offers.index', compact('student', 'mentors'));
+    }
+
+    public function alumniMentors($id)
+    {
+        $alumni = Alumni::findOrFail($id);
+        $mentorshipRequests = MentorRequest::where('alumni_id', $id)->get();
+        return view('mentorship_requests.index', compact('alumni', 'mentorshipRequests'));
+    }
+    
 
     public function requestMentor($id)
     {

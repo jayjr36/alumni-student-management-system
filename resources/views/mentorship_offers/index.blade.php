@@ -1,6 +1,85 @@
 @extends('layout')
 
 @section('content')
+    <div>
+        @if ($mentors->count() > 0)
+            <div class="mt-4">
+                <h4>Your Mentors</h4>
+                <ul class="list-group">
+                    @foreach ($mentors as $mentor)
+                        <li class="list-group-item">
+                            {{ $mentor->name }}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
+
+    <div class="mt-4">
+        <h4>Available Mentors</h4>
+        <ul class="list-group">
+            @foreach (\App\Models\Alumni::whereHas('mentorRequests', function ($query) {
+            $query->where('status', 'approved');
+        })->get() as $mentor)
+                <li class="list-group-item">
+                    {{ $mentor->name }}
+                    <button type="button" class="btn btn-info btn-sm float-right ml-2" data-toggle="modal"
+                        data-target="#mentorModal{{ $mentor->id }}">
+                        View Profile
+                    </button>
+                    <form
+                        action="{{ route('request.mentorship', ['mentor_id' => $mentor->id, 'student_id' => $student->id]) }}"
+                        method="POST" class="d-inline float-right">
+                        @csrf
+                        <button type="submit" class="btn btn-success btn-sm">Request Mentorship</button>
+                    </form>
+                </li>
+
+                <!-- Mentor Profile Modal -->
+                <div class="modal fade" id="mentorModal{{ $mentor->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="mentorModalLabel{{ $mentor->id }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="mentorModalLabel{{ $mentor->id }}">{{ $mentor->name }}'s
+                                    Profile</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Graduation Year:</strong> {{ $mentor->graduation_year }}</p>
+                                <p><strong>Degree:</strong> {{ $mentor->degree }}</p>
+                                <p><strong>Bio:</strong> {{ $mentor->bio }}</p>
+                                @if ($mentor->profile_picture)
+                                    <img src="{{ asset('images/profile_pictures/' . $mentor->profile_picture) }}"
+                                        alt="{{ $mentor->name }}" class="img-fluid">
+                                @endif
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+@endsection
+
+
+
+
+
+{{-- @extends('layout')
+
+@section('content')
 
     @if ($mentorshipOffers->isEmpty())
         <div class="alert alert-info" role="alert">
@@ -43,4 +122,4 @@
             @endforeach
         </div>
     @endif
-@endsection
+@endsection --}}
