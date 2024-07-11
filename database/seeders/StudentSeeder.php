@@ -30,7 +30,6 @@ class StudentSeeder extends Seeder
              $student = Student::create([
                 'name' => $studentData['name'],
                 'regNumber' => $studentData['regNumber'],
-               // 'user_id' => $user->id // assuming you have a user_id field to link with the User model
             ]);
 
             $user = User::create([

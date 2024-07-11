@@ -70,7 +70,26 @@ class AlumniController extends Controller
         $alumni->bio = $request->input('bio');
         $alumni->save();
     
-        return redirect()->route('alumni_profile')->with('success', 'Profile updated successfully.');
+        return redirect()->route('alumni_profile', $alumni->id)->with('success', 'Profile updated successfully.');
+    }
+
+    // public function index()
+    // {
+    //     $alumni = Alumni::all();
+    //     return view('alumni.index', compact('alumni'));
+    // }
+
+    public function show(Request $request)
+    {
+        $alumnus = Alumni::find($request->id);
+        return view('alumni.profile_modal', compact('alumnus'));
+    }
+
+    public function destroy($id)
+    {
+        $alumnus = Alumni::findOrFail($id);
+        $alumnus->delete();
+        return redirect()->route('alumni.index')->with('success', 'Alumnus deleted successfully.');
     }
     
 }

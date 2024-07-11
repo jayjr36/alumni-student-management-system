@@ -110,3 +110,12 @@ Route::put('/student/profile/update', [StudentController::class, 'updateProfile'
 
 Route::get('/student/mentorship/{id}', [ProfileController::class, 'studentMentors'])->name('student.mentorship');
 Route::get('/alumni/mentors/{id}', [ProfileController::class, 'alumniMentors'])->name('alumni.mentorship');
+
+
+Route::get('/alumni/{id}', [AlumniController::class, 'show'])->name('alumni.show');
+Route::delete('/alumni/{id}', [AlumniController::class, 'destroy'])->name('alumni.destroy');
+// Route to delete a student
+Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+
+// Route to view student profile (modal popup)
+Route::get('/students/{id}/profile', [StudentController::class, 'profile'])->name('students.profile');

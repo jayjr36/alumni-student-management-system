@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
+
 class RegisterController extends Controller
 {
     /*
@@ -37,9 +40,9 @@ class RegisterController extends Controller
     protected function redirectTo()
     {
         if (Auth::user()->role == 'admin') {
-            return '/adminhome'; 
+            return '/adminhome';
         } else {
-            return '/home'; 
+            return '/home';
         }
     }
     /**
@@ -62,7 +65,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'regNumber' => ['reauired', 'string', 'max:255'],
+            'regNumber' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -76,16 +79,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        Log::info('Data received:', $data);
+
         $student = Student::where('regNumber', $data['regNumber'])->first();
         $alumni = Alumni::where('regNumber', $data['regNumber'])->first();
-    
+
         if (!$student && !$alumni) {
             throw new \Exception('This student details do not exist.');
         }
-    
+
         $userRole = $student ? 'student' : 'alumni';
         $guestId = $student ? $student->id : ($alumni ? $alumni->id : null);
-    
+
+        Log::info('Guest ID:', ['guest_id' => $guestId]);
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -94,5 +101,4 @@ class RegisterController extends Controller
             'guest_id' => $guestId,
         ]);
     }
-    
 }

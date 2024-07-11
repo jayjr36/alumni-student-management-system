@@ -1,49 +1,35 @@
 @extends('layout')
 
 @section('content')
-<div class="container">
-    <div class="card col-7">
-        <div class="card-header">
+<div class="container col-7 py-5">
+    <div class="card">
+        <div class="card-header text-center">
             <h3>{{ $student->name }}</h3>
         </div>
         <div class="card-body">
-            <p><strong>Email:</strong> {{ $student->email ?? ''}}</p>
-            <p><strong>Year:</strong> {{ $student->year ?? ''}}</p>
-            <p><strong>Major:</strong> {{ $student->major ?? ''}}</p>
-            <p><strong>Bio:</strong> {{ $student->bio ?? ''}}</p>
+            <div class="row justify-content-center">
+                <div class="col-md-4 text-center">
+                    @if ($student->profile_picture)
+                        <img src="{{ asset('storage/' . $student->profile_picture) }}" class="img-fluid rounded-circle"
+                            style="max-width: 200px;" alt="Profile Picture">
+                    @else
+                        <img src="{{ asset('images/default-profile.png') }}" class="img-fluid rounded-circle"
+                            style="max-width: 200px;" alt="Default Profile Picture">
+                    @endif
+                </div>
+                <div class="col-md-8">
+                    <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
+                    <p><strong>Current Year:</strong> {{ $student->year ?? '' }}</p>
+                    <p><strong>Programme:</strong> {{ $student->major ?? '' }}</p>
+                    <p><strong>Bio:</strong> {{ $student->bio ?? '' }}</p>
+                </div>
+            </div>
         </div>
-        <a href="{{ route('student.profile.edit') }}" class="btn btn-primary  mb-5">Update Profile</a>
-       
-    </div>
-
-    @if($mentors->count() > 0)
-        <div class="mt-4">
-            <h4>Your Mentors</h4>
-            <ul class="list-group">
-                @foreach($mentors as $mentor)
-                    <li class="list-group-item">
-                        {{ $mentor->name }}
-                    </li>
-                @endforeach
-            </ul>
+        <div class="card-footer">
+            <div class="row justify-content-center">
+                <a href="{{ route('student.profile.edit') }}" class="btn btn-primary mb-5">Update Profile</a>
+            </div>
         </div>
-    @endif
-
-    <div class="mt-4">
-        <h4>Available Mentors</h4>
-        <ul class="list-group">
-            @foreach(\App\Models\Alumni::whereHas('mentorRequests', function ($query) {
-                $query->where('status', 'approved');
-            })->get() as $mentor)
-                <li class="list-group-item">
-                    {{ $mentor->name }}
-                    <form action="{{ route('request.mentorship', ['mentor_id' => $mentor->id, 'student_id' => $student->id]) }}" method="POST" class="d-inline float-right">
-                        @csrf
-                        <button type="submit" class="btn btn-success btn-sm">Request Mentorship</button>
-                    </form>
-                </li>
-            @endforeach
-        </ul>
     </div>
 </div>
 @endsection

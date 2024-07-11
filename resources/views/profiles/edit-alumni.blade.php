@@ -3,9 +3,10 @@
 @extends('layout') <!-- Assuming you have a layout template -->
 
 @section('content')
+<div class="container col-7">
     <div class="card">
         <div class="card-body">
-            <h3>Edit Profile</h3>
+            <h3 class="text-center">Edit Profile</h3>
             <form action="{{ route('alumni.profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -29,9 +30,11 @@
                     <label for="profile_picture">Profile Picture</label>
                     <input type="file" id="profile_picture" name="profile_picture" class="form-control-file">
                 </div>
-
+               <div class="row pt-5">
                 <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
             </form>
         </div>
     </div>
+</div>
 @endsection

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('year')->nullable();
             $table->string('major')->nullable();
             $table->text('bio')->nullable();
+            $table->string('profile_picture')->nullable();
             $table->timestamps();
         });
     }

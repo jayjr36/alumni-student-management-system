@@ -1,41 +1,43 @@
 @extends('layout')
 
 @section('content')
-    <div class="container-fluid " style="height: 100vh">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="card bg-dark text-white py-5">
-                    <div class="card-header">Add Student</div>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h3>Add Student</h3>
+                </div>
 
-                    <div class="card-body">
-                        @if (session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
-                        @endif
+                <div class="card-body">
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
 
-                        @if (session('error'))
-                            <div class="alert alert-danger">{{ session('error') }}</div>
-                        @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
 
-                        <form method="POST" action="{{ route('students.store') }}">
-                            @csrf
+                    <form method="POST" action="{{ route('students.store') }}">
+                        @csrf
 
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input id="name" type="text" class="form-control" name="name" required autofocus>
-                            </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input id="name" type="text" class="form-control" name="name" required autofocus>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="regNumber">Registration Number</label>
-                                <input id="regNumber" type="text" class="form-control" name="regNumber" required autofocus>
-                            </div>
-                            
-                            <div class="row px-3 py-3">
-                                <button type="submit" class="btn btn-primary ">Add</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="mb-3">
+                            <label for="regNumber" class="form-label">Registration Number</label>
+                            <input id="regNumber" type="text" class="form-control" name="regNumber" required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Add</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection

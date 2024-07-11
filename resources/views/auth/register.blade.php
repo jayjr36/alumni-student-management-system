@@ -1,13 +1,19 @@
 @extends('layout')
 
 @section('content')
-<div class="container-fluid text-white py-5" style="height: 100vh;">
-    <div class="row justify-content-center">
+<div class="container-fluid text-white py-5" style="height: 100vh; background-color: #f8f9fa;">
+    <div class="row justify-content-center align-items-center" style="height: 100%;">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-primary text-white">
+                    <h3>{{ __('Join DIT Mentorship Platform') }}</h3>
+                    <p>Empowering Students and Alumni through Connection</p>
+                </div>
 
                 <div class="card-body">
+                    <div class="text-center mb-4">
+                        <img src="{{ asset('images/mentorship.png') }}" alt="Mentorship" class="img-fluid" style="max-height: 200px;">
+                    </div>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -53,8 +59,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
@@ -80,16 +84,16 @@
                         <div class="row justify-content-center">
                             <div class="col-6 d-flex justify-content-center px-5 mb-0">
                                 <div class="col-md-12 px-5">
-                                <button type="submit" class="btn btn-success btn-sm w-100">
-                                    {{ __('Register') }}
-                                </button>
+                                    <button type="submit" class="btn btn-success btn-sm w-100">
+                                        {{ __('Register') }}
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                        
+                        <div class="row text-center mt-3">
+                            <a href="{{ route('login') }}" class="text-decoration-none">{{ __('Sign in to your account') }}</a>
                         </div>
-                        <div class="row text-center">
-                            <a href="{{route('login')}}" >Signin to your account</a>
-                        </div>
-
                     </form>
                 </div>
             </div>

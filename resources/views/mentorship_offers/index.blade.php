@@ -1,10 +1,11 @@
 @extends('layout')
 
 @section('content')
+<div class="container col-6">
     <div>
         @if ($mentors->count() > 0)
             <div class="mt-4">
-                <h4>Your Mentors</h4>
+                <h4 class="text-center">Your Mentors</h4>
                 <ul class="list-group">
                     @foreach ($mentors as $mentor)
                         <li class="list-group-item">
@@ -17,14 +18,14 @@
     </div>
 
     <div class="mt-4">
-        <h4>Available Mentors</h4>
+        <h4 class="text-center">Available Mentors</h4>
         <ul class="list-group">
             @foreach (\App\Models\Alumni::whereHas('mentorRequests', function ($query) {
             $query->where('status', 'approved');
         })->get() as $mentor)
                 <li class="list-group-item">
                     {{ $mentor->name }}
-                    <button type="button" class="btn btn-info btn-sm float-right ml-2" data-toggle="modal"
+                    <button type="button" class="btn btn-info btn-sm float-right ml-2 px-5" data-toggle="modal"
                         data-target="#mentorModal{{ $mentor->id }}">
                         View Profile
                     </button>
@@ -32,7 +33,7 @@
                         action="{{ route('request.mentorship', ['mentor_id' => $mentor->id, 'student_id' => $student->id]) }}"
                         method="POST" class="d-inline float-right">
                         @csrf
-                        <button type="submit" class="btn btn-success btn-sm">Request Mentorship</button>
+                        <button type="submit" class="btn btn-success btn-sm px-5 ml-4">Request Mentorship</button>
                     </form>
                 </li>
 
@@ -70,7 +71,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+</div>
 @endsection
 
 
