@@ -17,6 +17,7 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Registration Number</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -25,6 +26,8 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $student->name }}</td>
+                    <td>{{ $student->regNumber }}</td>
+                    
                     <td>
                         <a href="{{ route('students.profile', $student->id) }}" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#profileModal{{ $student->id }}">View Profile</a>
                         <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display: inline;">
@@ -44,9 +47,19 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                                @if ($student->profile_picture)
+                                    <p><strong>Profile Picture:</strong></p>
+                                    <img src="{{ asset('storage/' . $student->profile_picture) }}" alt="{{ $student->name }}'s Profile Picture" class="img-fluid">
+                                @endif
                                 <p><strong>Name:</strong> {{ $student->name }}</p>
                                 <p><strong>Registration Number:</strong> {{ $student->regNumber }}</p>
-                                <!-- Add more profile details as needed -->
+                                <p><strong>Year:</strong> {{ $student->year }}</p>
+                                <p><strong>Major:</strong> {{ $student->major }}</p>
+                                <p><strong>Bio:</strong> {{ $student->bio }}</p>
+                                @if ($student->profile_picture)
+                                    <p><strong>Profile Picture:</strong></p>
+                                    <img src="{{ asset('storage/' . $student->profile_picture) }}" alt="{{ $student->name }}'s Profile Picture" class="img-fluid">
+                                @endif
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

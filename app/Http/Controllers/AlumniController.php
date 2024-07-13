@@ -82,7 +82,7 @@ class AlumniController extends Controller
     public function show(Request $request)
     {
         $alumnus = Alumni::find($request->id);
-        return view('alumni.profile_modal', compact('alumnus'));
+        return view('profiles.alumni', compact('alumnus'));
     }
 
     public function destroy($id)

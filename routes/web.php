@@ -83,7 +83,6 @@ Route::delete('/forum/{post}', [ForumController::class, 'destroy'])->name('forum
 
 Route::get('/forum/fetch-messages', [ForumController::class, 'fetchMessages'])->name('forum.fetch-messages');
 
-Route::get('/alumni/{id}', [ProfileController::class, 'showAlumni'])->name('alumni_profile');
 Route::get('/student/{id}', [ProfileController::class, 'showStudent'])->name('student_profile');
 
 
@@ -99,7 +98,7 @@ Route::post('/admin/mentor-requests/{id}/approve', [AdminController::class, 'app
 Route::post('/admin/mentor-requests/{id}/reject', [AdminController::class, 'rejectMentorRequest'])->name('reject.mentor.request');
 
 
-Route::get('/alumni/profile', [AlumniController::class, 'showProfile'])->name('alumni.profile');
+Route::get('/alumni/profile', [ProfileController::class, 'showProfile'])->name('alumni.profile');
 Route::get('/alumni/profile/edit', [AlumniController::class, 'editProfileForm'])->name('alumni.profile.edit');
 Route::put('/alumni/profile/update', [AlumniController::class, 'updateProfile'])->name('alumni.profile.update');
 
@@ -119,3 +118,5 @@ Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('st
 
 // Route to view student profile (modal popup)
 Route::get('/students/{id}/profile', [StudentController::class, 'profile'])->name('students.profile');
+
+Route::get('/alumni/{id}', [ProfileController::class, 'showAlumni'])->name('alumni_profile');

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Alumni extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'regNumber','graduation_year', 'degree', 'bio'];
+    protected $fillable = ['name', 'regNumber','graduation_year', 'degree', 'bio', 'profile_picture'];
 
     public function mentorRequests()
     {
