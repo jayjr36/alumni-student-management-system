@@ -20,4 +20,9 @@ class Alumni extends Model
         return $this->belongsToMany(Student::class, 'mentor_mentee', 'mentor_id', 'student_id')->withPivot('status');
     }
 
+    public function mentorMentees()
+    {
+        return $this->hasMany(MentorMentee::class, 'mentor_id');
+    }
+
 }

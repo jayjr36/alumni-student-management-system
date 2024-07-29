@@ -1,5 +1,4 @@
-
- @extends('layout')
+@extends('layout')
 
 @section('content')
     <div class="container col-md-6">
@@ -12,19 +11,20 @@
                     <ul class="list-group list-group-flush">
                         @foreach ($mentorshipRequests as $mentorshipRequest)
                             <li class="list-group-item">
-                                <span>{{ $mentorshipRequest->student->name }} requested mentorship on "{{ $mentorshipRequest->mentorshipOffer->title }}"</span>
-                                @if (is_null($mentorshipRequest->accepted))
-                                    <form action="{{ route('mentorship_requests.accept', $mentorshipRequest) }}" method="POST" class="d-inline">
+                                <span>{{ $mentorshipRequest->student_name }} requested mentorship.</span>
+                              
+                                @if ($mentorshipRequest->status === 'pending')
+                                    <form action="{{ route('mentorship_requests.accept', $mentorshipRequest->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         <button type="submit" class="btn btn-success btn-sm mx-2">Accept</button>
                                     </form>
-                                    <form action="{{ route('mentorship_requests.reject', $mentorshipRequest) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('mentorship_requests.reject', $mentorshipRequest->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         <button type="submit" class="btn btn-danger btn-sm">Reject</button>
                                     </form>
-                                @elseif ($mentorshipRequest->accepted === 'true')
+                                @elseif ($mentorshipRequest->status === 'accepted')
                                     <span class="badge bg-success">Accepted</span>
-                                @elseif ($mentorshipRequest->accepted === 'false')
+                                @elseif ($mentorshipRequest->status === 'rejected')
                                     <span class="badge bg-danger">Rejected</span>
                                 @endif
                             </li>

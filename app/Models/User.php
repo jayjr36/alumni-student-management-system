@@ -48,10 +48,10 @@ class User extends Authenticatable
     }
 
  // Assuming the User model already exists
-public function mentorshipRequests()
-{
-    return $this->hasMany(MentorshipRequest::class, 'student_id');
-}
+ public function mentorshipRequests()
+    {
+        return $this->hasMany(MentorshipRequest::class, 'student_id', 'guest_id');
+    }
 
 public function mentorshipOffers()
 {

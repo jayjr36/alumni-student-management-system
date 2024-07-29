@@ -14,4 +14,9 @@ class Student extends Model
     {
         return $this->belongsToMany(Alumni::class, 'mentor_mentee', 'student_id', 'mentor_id')->withPivot('status');
     }
+
+    public function mentorRequests()
+    {
+        return $this->hasMany(MentorRequest::class);
+    }
 }

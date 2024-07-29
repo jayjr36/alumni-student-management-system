@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MentorMentee;
 use Illuminate\Http\Request;
 use App\Models\MentorshipRequest;
+use Illuminate\Support\Facades\Log;
+
 
 class MentorshipRequestController extends Controller
 {
@@ -30,20 +33,32 @@ class MentorshipRequestController extends Controller
     return view('mentorship_requests.index', compact('mentorshipRequests'));
 }
 
-public function accept(MentorshipRequest $mentorshipRequest)
+public function accept(Request $request, $id)
 {
-    $mentorshipRequest->accepted = true;
-    $mentorshipRequest->save();
+    try {
+        $mentorshipRequest = MentorMentee::findOrFail($id);
+        $mentorshipRequest->status = 'accepted';
+        $mentorshipRequest->save();
 
-    return redirect()->route('mentorship_requests.new')->with('success', 'Request accepted.');
+        return redirect()->route('mentorship_requests.new')->with('success', 'Mentorship request accepted.');
+
+    } catch (\Exception $e) {
+        Log::error('Error accepting mentorship request: ' . $e->getMessage());
+        return redirect()->route('mentorship_requests.new')->with('error', 'An error occurred while accepting the request.');
+    }
 }
-
-public function reject(MentorshipRequest $mentorshipRequest)
+public function reject(Request $request, $id)
 {
-    $mentorshipRequest->accepted = false;
-    $mentorshipRequest->save();
-  //  $mentorshipRequest->delete();
+    try {
+        $mentorshipRequest = MentorMentee::findOrFail($id);
+        $mentorshipRequest->status = 'rejected';
+        $mentorshipRequest->save();
 
-    return redirect()->route('mentorship_requests.index')->with('success', 'Request rejected.');
+        return redirect()->route('mentorship_requests.new')->with('success', 'Mentorship request rejected.');
+
+    } catch (\Exception $e) {
+        Log::error('Error rejecting mentorship request: ' . $e->getMessage());
+        return redirect()->route('mentorship_requests.new')->with('error', 'An error occurred while rejecting the request.');
+    }
 }
 }

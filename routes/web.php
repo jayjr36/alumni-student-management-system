@@ -4,14 +4,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\InteractionController;
 use App\Http\Controllers\MentorshipOfferController;
+use App\Http\Controllers\ClassSubscriptionController;
 use App\Http\Controllers\MentorshipRequestController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -70,10 +72,6 @@ Route::delete('/mentorship-offers/{mentorshipOffer}', [MentorshipOfferController
 Route::get('/mentorship', function () {
     return view('mentorship');
 })->name('mentorship');
-Route::post('/mentorship-requests', [MentorshipRequestController::class, 'store'])->name('mentorship_requests.store');
-Route::get('/new/mentorship-requests', [MentorshipRequestController::class, 'index'])->name('mentorship_requests.new');
-Route::post('/mentorship-requests/{mentorshipRequest}/accept', [MentorshipRequestController::class, 'accept'])->name('mentorship_requests.accept');
-Route::post('/mentorship-requests/{mentorshipRequest}/reject', [MentorshipRequestController::class, 'reject'])->name('mentorship_requests.reject');
 
 // routes/web.php
 Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
@@ -93,9 +91,6 @@ Route::post('/admin/mentor-requests/{id}/reject', [ProfileController::class, 're
 Route::post('/mentorship/{mentor_id}/{student_id}/request', [ProfileController::class, 'requestMentorship'])->name('request.mentorship');
 Route::post('/mentorship/{mentor_id}/{student_id}/respond/{response}', [ProfileController::class, 'respondMentorshipRequest'])->name('respond.mentorship');
 
-Route::get('/all/admin/mentor-requests', [AdminController::class, 'mentorRequests'])->name('admin.mentor.requests');
-Route::post('/admin/mentor-requests/{id}/approve', [AdminController::class, 'approveMentorRequest'])->name('approve.mentor.request');
-Route::post('/admin/mentor-requests/{id}/reject', [AdminController::class, 'rejectMentorRequest'])->name('reject.mentor.request');
 
 
 Route::get('/alumni/profile', [ProfileController::class, 'showProfile'])->name('alumni.profile');
@@ -120,3 +115,21 @@ Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('st
 Route::get('/students/{id}/profile', [StudentController::class, 'profile'])->name('students.profile');
 
 Route::get('/alumni/{id}', [ProfileController::class, 'showAlumni'])->name('alumni_profile');
+
+Route::get('/all/admin/mentor-requests', [AdminController::class, 'mentorRequests'])->name('admin.mentor.requests');
+Route::post('/admin/mentor-requests/{id}/approve', [AdminController::class, 'approveMentorRequest'])->name('approve.mentor.request');
+Route::post('/admin/mentor-requests/{id}/reject', [AdminController::class, 'rejectMentorRequest'])->name('reject.mentor.request');
+
+Route::post('/mentorship-requests', [MentorshipRequestController::class, 'store'])->name('mentorship_requests.store');
+Route::get('/new/mentorship-requests', [MentorshipRequestController::class, 'index'])->name('mentorship_requests.new');
+// web.php
+Route::post('/alumni/mentorship-requests/{mentorshipRequest}/accept', [MentorshipRequestController::class, 'accept'])->name('mentorship_requests.accept');
+Route::post('/alumni/mentorship-requests/{mentorshipRequest}/reject', [MentorshipRequestController::class, 'reject'])->name('mentorship_requests.reject');
+
+
+Route::get('classes/create', [ClassController::class, 'create'])->name('classes.create');
+Route::post('classes/store', [ClassController::class, 'store'])->name('classes.store');
+Route::get('classes', [ClassController::class, 'index'])->name('classes.index');
+Route::get('classes/{classId}/subscribe', [ClassSubscriptionController::class, 'subscribe'])->name('classes.subscribe');
+Route::get('subscribed-classes', [ClassSubscriptionController::class, 'subscribedClasses'])->name('classes.subscribed');
+Route::get('classes/{id}', [ClassSubscriptionController::class, 'show'])->name('classes.show');

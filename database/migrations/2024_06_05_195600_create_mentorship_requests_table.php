@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('mentorship_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('users');
-            $table->foreignId('mentorship_offer_id')->constrained('mentorship_offers');
+            $table->foreignId('student_id')->constrained('students')->onDelete('cascade'); // Reference the students table
+            $table->foreignId('mentorship_offer_id')->constrained('mentorship_offers')->onDelete('cascade'); // Reference the mentorship_offers table
             $table->string('accepted')->nullable();
             $table->timestamps();
         });

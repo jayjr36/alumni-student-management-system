@@ -11,8 +11,20 @@ class MentorRequest extends Model
 
     protected $fillable = ['alumni_id', 'status'];
 
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    // Define the relationship to the Alumni model
     public function alumni()
     {
         return $this->belongsTo(Alumni::class);
+    }
+
+    // Define the relationship to the MentorshipOffer model (assuming there's a model for the offer)
+    public function mentorshipOffer()
+    {
+        return $this->belongsTo(MentorshipOffer::class);
     }
 }
