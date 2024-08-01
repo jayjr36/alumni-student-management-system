@@ -2,7 +2,18 @@
 
 @section('content')
     <div class="container col-md-6">
+        <div class="row py-3">
+            <div class="col text-center">
+                <a href="{{route('classes.create')}}" class="btn btn-info">CREATE CLASS</a>
+            </div>
+            <div class="col text-center">
+
+                <a href="{{route('classes.index')}}" class="btn btn-info">SUBSCRIBERS</a>
+            </div>
+        </div>
         <div class="card">
+          
+
             <div class="card-body">
                 <h5 class="card-title">Mentorship Requests</h5>
                 @if ($mentorshipRequests->isEmpty())
@@ -33,5 +44,6 @@
                 @endif
             </div>
         </div>
+
     </div>
 @endsection

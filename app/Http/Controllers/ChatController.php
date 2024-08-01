@@ -6,7 +6,8 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Storage;
+    
 class ChatController extends Controller
 {
     public function index(Request $request)
@@ -15,28 +16,35 @@ class ChatController extends Controller
         return view('chat');
     }
 
+    
     public function sendMessage(Request $request)
-{
-    $request->validate([
-        'receiver_id' => 'required|string',
-        'message' => 'required|string'
-
-    ]);
-    try {
-        Message::create([
-            'sender_id' =>  auth()->id(),
-            'receiver_id' =>  $request->input('receiver_id'),
-            'message' =>  $request->input('message'),
+    {
+        $validated = $request->validate([
+            'message' => 'nullable|string',
+            'receiver_id' => 'required|integer',
+            'file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
-
-        return response()->json(['success' => true]);
-    } catch (\Exception $e) {
-
-        Log::error('Error saving message: ' . $e->getMessage());
-
-        return response()->json(['success' => false, 'error' => 'Error saving message'], 500);
+    
+        $fileUrl = null;
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $path = $file->store('chat_files');
+            $fileUrl = Storage::url($path);
+        }
+    
+        $message = Message::create([
+            'sender_id' => auth()->id(),
+            'receiver_id' => $validated['receiver_id'],
+            'message' => $validated['message'],
+            'file_url' => $fileUrl,
+        ]);
+    
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+        ]);
     }
-}
+    
     public function receiveMessage(Request $request)
     {
         $messages = Message::where('receiver_id', auth()->id())->get();

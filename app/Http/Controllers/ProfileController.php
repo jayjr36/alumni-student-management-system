@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Student;
-use App\Models\Alumni;
-use App\Models\MentorRequest;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\Alumni;
+use App\Models\Classes;
+use App\Models\Student;
+use Illuminate\Http\Request;
+use App\Models\MentorRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class ProfileController extends Controller
 {
     public function showAlumni($id)
@@ -33,21 +35,23 @@ class ProfileController extends Controller
 
     public function studentMentors($student_id)
     {
-        // Fetch the student or fail
         $student = Student::findOrFail($student_id);
-    
-        // Fetch mentors who have approved mentorship requests (status = 'approved') for any student
+        
         $approvedMentors = Alumni::whereHas('mentorRequests', function ($query) {
             $query->where('status', 'approved');
         })->get();
-    
-        // Fetch mentors who have accepted mentorship requests (status = 'accepted') for the specific student
+        
         $mentorsAcceptedByStudent = Alumni::whereHas('mentorMentees', function ($query) use ($student_id) {
             $query->where('student_id', $student_id)
                   ->where('status', 'accepted');
         })->get();
-    
-        return view('mentorship_offers.index', compact('student', 'approvedMentors', 'mentorsAcceptedByStudent'));
+        
+        $mentorClasses = [];
+        foreach ($mentorsAcceptedByStudent as $mentor) {
+            $mentorClasses[$mentor->id] = Classes::where('mentor_id', $mentor->id)->get();
+        }
+        
+        return view('mentorship_offers.index', compact('student', 'approvedMentors', 'mentorsAcceptedByStudent', 'mentorClasses'));
     }
     
 
@@ -98,18 +102,14 @@ class ProfileController extends Controller
     public function requestMentorship($mentor_id, $student_id)
     {
         try {
-            // Check if mentor exists
             $mentor = Alumni::findOrFail($mentor_id);
     
-            // Check if student exists
             $student = Student::findOrFail($student_id);
     
-            // Check if the mentorship request already exists
             if ($mentor->mentees()->where('student_id', $student_id)->exists()) {
                 return redirect()->back()->with('error', 'You have already requested mentorship from this mentor.');
             }
     
-            // Attach the student to the mentor
             $mentor->mentees()->attach($student_id);
     
             return redirect()->back()->with('success', 'Mentorship request sent.');
@@ -129,5 +129,21 @@ class ProfileController extends Controller
         $mentor = Alumni::findOrFail($mentor_id);
         $mentor->mentees()->updateExistingPivot($student_id, ['status' => $response]);
         return redirect()->back()->with('success', 'Mentorship request ' . $response . '.');
+    }
+
+    public function showprofile($guestId)
+    {
+        $user = User::where('guest_id', $guestId)->firstOrFail();
+        
+        // Determine if the user is a student or alumni
+        if (Student::where('id', $guestId)->exists()) {
+            $profile = Student::findOrFail($guestId);
+        } elseif (Alumni::where('id', $guestId)->exists()) {
+            $profile = Alumni::findOrFail($guestId);
+        } else {
+            return response()->json(['error' => 'Profile not found'], 404);
+        }
+
+        return response()->json($profile);
     }
 }

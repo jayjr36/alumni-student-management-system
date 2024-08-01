@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('mentor_id')
                   ->constrained('alumni')
-                  ->onDelete('cascade');
+                  ->onDelete('cascade')
+                  ->name('classes_mentor_id');
             $table->string('title');
             $table->text('description')->nullable();
             $table->timestamps();

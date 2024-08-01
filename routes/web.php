@@ -18,7 +18,7 @@ use App\Http\Controllers\MentorshipRequestController;
 Route::get('/', function () {
     return view('auth.login');
  })->name('user.login');
- Route::get('/', function () {
+ Route::get('/register', function () {
     return view('auth.register');
  })->name('user.register');
 Route::get('/admin', function () {
@@ -57,6 +57,9 @@ Route::get('/interaction', [InteractionController::class, 'index'])->name('inter
 Route::get('/search', [InteractionController::class, 'search'])->name('search');
 
 Route::get('/chat', [ChatController::class, 'index'])->name('chat');
+
+// Example route for handling POST requests
+Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send-message');
 
 Route::get('/send-message', [ChatController::class, 'sendMessage'])->name('send-message');
 Route::get('/receive-message', [ChatController::class, 'receiveMessage'])->name('receive-message');
@@ -130,6 +133,12 @@ Route::post('/alumni/mentorship-requests/{mentorshipRequest}/reject', [Mentorshi
 Route::get('classes/create', [ClassController::class, 'create'])->name('classes.create');
 Route::post('classes/store', [ClassController::class, 'store'])->name('classes.store');
 Route::get('classes', [ClassController::class, 'index'])->name('classes.index');
-Route::get('classes/{classId}/subscribe', [ClassSubscriptionController::class, 'subscribe'])->name('classes.subscribe');
+Route::post('classes/{classId}/subscribe', [ClassSubscriptionController::class, 'subscribeToClass'])->name('classes.subscribe');
 Route::get('subscribed-classes', [ClassSubscriptionController::class, 'subscribedClasses'])->name('classes.subscribed');
 Route::get('classes/{id}', [ClassSubscriptionController::class, 'show'])->name('classes.show');
+
+Route::get('/student/classes', [ClassController::class, 'studentClasses'])->name('student.classes');
+
+Route::get('/student/mantor/classes', [ClassController::class, 'mentorClasses'])->name('mentor.classes');
+
+Route::get('/user-profile/{guestId}', [ProfileController::class, 'showprofile'])->name('user.profile');

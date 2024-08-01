@@ -11,6 +11,34 @@ use Illuminate\Support\Facades\Auth;
 
 class ClassSubscriptionController extends Controller
 {
+
+    public function subscribeToClass(Request $request, $classId)
+{
+    // Validate the request
+    $request->validate([
+        'class_id' => 'required|exists:classes,id',
+    ]);
+
+    // Get the currently authenticated student
+    $studentId = Auth::user()->guest_id; // Assuming guestid is used to identify the student
+
+    // Check if the subscription already exists
+    $subscriptionExists = ClassSubscriptions::where('class_id', $classId)
+        ->where('student_id', $studentId)
+        ->exists();
+
+    if ($subscriptionExists) {
+        return redirect()->back()->with('error', 'You are already subscribed to this class.');
+    }
+
+    // Create a new subscription
+    ClassSubscriptions::create([
+        'class_id' => $classId,
+        'student_id' => $studentId,
+    ]);
+
+    return redirect()->back()->with('success', 'Subscribed to class successfully.');
+}
     public function subscribe($classId)
     {
         $class = Classes::findOrFail($classId);
@@ -35,7 +63,7 @@ class ClassSubscriptionController extends Controller
             $query->where('student_id', Auth::id());
         })->get();
 
-        return view('classes.subscribed', compact('classes'));
+        return view('classes.subscribed_classes', compact('classes'));
     }
 
     public function show($id)
@@ -43,7 +71,7 @@ class ClassSubscriptionController extends Controller
     $class = Classes::findOrFail($id);
     $subscribers = $class->subscriptions()->with('student')->get();
 
-    return view('classes.show', compact('class', 'subscribers'));
+    return view('classes.all_subscribers', compact('class', 'subscribers'));
 }
 
 }
