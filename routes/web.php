@@ -14,6 +14,7 @@ use App\Http\Controllers\InteractionController;
 use App\Http\Controllers\MentorshipOfferController;
 use App\Http\Controllers\ClassSubscriptionController;
 use App\Http\Controllers\MentorshipRequestController;
+use App\Http\Controllers\MaterialsController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -31,6 +32,8 @@ Route::get('/landingpage', function () {
 Route::get('/adminhome', function () {
     return view('admin.adminhome');
 })->name('adminhome');
+
+
 
 Route::get('/students', [StudentController::class, 'index'])->name('students.index');
 Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
@@ -142,3 +145,12 @@ Route::get('/student/classes', [ClassController::class, 'studentClasses'])->name
 Route::get('/student/mantor/classes', [ClassController::class, 'mentorClasses'])->name('mentor.classes');
 
 Route::get('/user-profile/{guestId}', [ProfileController::class, 'showprofile'])->name('user.profile');
+Route::post('/materials/store', [MaterialsController::class, 'store'])->name('materials.store');
+
+Route::get('/classes/{class}/materials', [MaterialsController::class, 'show'])->name('classes.materials');
+
+Route::get('/manage/class', [MaterialsController::class, 'create'])->name('class.manage');
+
+Route::get('/materials/create', [MaterialsController::class, 'create'])->name('materials.create');
+
+Route::post('/materials', [MaterialsController::class, 'store'])->name('materials.store');

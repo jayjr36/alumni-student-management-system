@@ -74,6 +74,7 @@
                                                 <input type="hidden" name="class_id" value="{{ $class->id }}">
                                                 <button type="submit" class="btn btn-info btn-sm">SUBSCRIBE</button>
                                             </form>
+                                            <a href="{{ route('classes.materials', $class->id) }}" class="btn btn-secondary btn-sm ml-2">View Materials</a>
                                         </li>
                                     @empty
                                         <p>No classes available.</p>
@@ -84,6 +85,7 @@
                     </ul>
                 @endif
             </div>
+            
         </div>
     </div>
 

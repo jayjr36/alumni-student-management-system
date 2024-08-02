@@ -20,4 +20,9 @@ class Classes extends Model
     {
         return $this->hasMany(ClassSubscriptions::class, 'class_id');
     }
+
+    public function materials()
+    {
+        return $this->hasMany(Material::class, 'class_id');
+    }
 }

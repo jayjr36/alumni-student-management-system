@@ -4,7 +4,7 @@
     <div class="container col-md-6">
         <div class="row py-3">
             <div class="col text-center">
-                <a href="{{route('classes.create')}}" class="btn btn-info">CREATE CLASS</a>
+                <a href="{{route('class.manage')}}" class="btn btn-info">MANAGE CLASS</a>
             </div>
             <div class="col text-center">
 
@@ -12,8 +12,6 @@
             </div>
         </div>
         <div class="card">
-          
-
             <div class="card-body">
                 <h5 class="card-title">Mentorship Requests</h5>
                 @if ($mentorshipRequests->isEmpty())
