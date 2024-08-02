@@ -91,5 +91,40 @@ class AlumniController extends Controller
         $alumnus->delete();
         return redirect()->route('alumni.index')->with('success', 'Alumnus deleted successfully.');
     }
+
+    public function edit($id)
+    {
+        $alumnus = Alumni::findOrFail($id);
+        return view('alumni.edit', compact('alumnus'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'regNumber' => 'required|string|max:255',
+            'graduation_year' => 'nullable|integer',
+            'degree' => 'nullable|string|max:255',
+            'bio' => 'nullable|string',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $alumnus = Alumni::findOrFail($id);
+        $alumnus->name = $request->name;
+        $alumnus->regNumber = $request->regNumber;
+        $alumnus->graduation_year = $request->graduation_year;
+        $alumnus->degree = $request->degree;
+        $alumnus->bio = $request->bio;
+
+        if ($request->hasFile('profile_picture')) {
+            $imageName = time().'.'.$request->profile_picture->extension();
+            $request->profile_picture->move(public_path('images'), $imageName);
+            $alumnus->profile_picture = $imageName;
+        }
+
+        $alumnus->save();
+
+        return redirect()->route('alumni.index')->with('success', 'Alumni profile updated successfully.');
+    }
     
 }

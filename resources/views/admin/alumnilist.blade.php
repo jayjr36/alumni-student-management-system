@@ -23,20 +23,23 @@
         </thead>
         <tbody>
             @foreach ($alumni as $alumnus)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $alumnus->name }}</td>
-                    <td>{{ $alumnus->regNumber }}</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm view-profile" data-id="{{ $alumnus->id }}" data-bs-toggle="modal" data-bs-target="#profileModal{{ $alumnus->id }}">View Profile</button>
-                        <form action="{{ route('alumni.destroy', $alumnus->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete {{ $alumnus->name }}?')">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $alumnus->name }}</td>
+                <td>{{ $alumnus->regNumber }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm view-profile" data-id="{{ $alumnus->id }}" data-bs-toggle="modal" data-bs-target="#profileModal{{ $alumnus->id }}">View Profile</button>
+            
+                    <a href="{{ route('alumni.edit', $alumnus->id) }}" class="btn btn-warning btn-sm">Edit</a>
+            
+                    <form action="{{ route('alumni.destroy', $alumnus->id) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete {{ $alumnus->name }}?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            
                 <!-- Profile Modal -->
                 <div class="modal fade" id="profileModal{{ $alumnus->id }}" tabindex="-1" aria-labelledby="profileModalLabel{{ $alumnus->id }}" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
@@ -70,10 +73,10 @@
 </div>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
-
+{{-- 
 <script>
     var alumniShowUrl = '{{ route('alumni.show', ['id' => ':id']) }}';
-</script>
+</script> --}}
 
 <script>
     $(document).ready(function() {

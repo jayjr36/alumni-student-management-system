@@ -2,6 +2,24 @@
 
 @section('content')
 <div class="container col-5 mt-4">
+    @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
     <h3 class="text-center">User Search</h3>
     <form action="{{ route('search') }}" method="GET" class="form-inline justify-content-center mb-4">
         <div class="input-group">
@@ -22,7 +40,7 @@
                         <div>
                             <a href="{{ route('chat', ['receiver_id' => $user->id]) }}" class="btn btn-primary btn-sm">Chat</a>
                             <button data-toggle="modal"
-                            data-target="#profileModal" class="btn btn-info btn-sm ml-2 view-profile-btn" data-guest-id="{{ $user->guestid }}">View Profile</button>
+                            data-target="#profileModal" class="btn btn-info btn-sm ml-2 view-profile-btn" data-guest-id="{{ $user->guest_id }}">View Profile</button>
                         </div>
                     @endif
                 </li>
@@ -49,39 +67,39 @@
             </div>
         </div>
     </div>
-
 </div>
 
 @endsection
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap JS and CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    
-@push('scripts')
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Full version of jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
 $(document).ready(function() {
     $('.view-profile-btn').on('click', function() {
         var guestId = $(this).data('guest-id');
+        console.log('Button clicked. Guest ID:', guestId); // Log click event
 
         $.ajax({
             url: '/user-profile/' + guestId,
             type: 'GET',
+            beforeSend: function() {
+                console.log('Sending request to:', '/user-profile/' + guestId); // Log request URL
+            },
             success: function(response) {
+                console.log('Profile fetched successfully:', response); // Log successful response
                 $('#profile-content').html(`
                     <h5>${response.name}</h5>
                     <p><strong>Bio:</strong> ${response.bio}</p>
                     <p><strong>Profile Picture:</strong> <img src="${response.profile_picture}" alt="Profile Picture" class="img-fluid"></p>
-                    <!-- Add other user fields here -->
                 `);
                 $('#profileModal').modal('show');
             },
             error: function(xhr, status, error) {
-                console.error('Error fetching user profile:', error);
+                console.error('Error fetching user profile:', error); // Log errors
             }
         });
     });
 });
 </script>
-@endpush

@@ -154,3 +154,9 @@ Route::get('/manage/class', [MaterialsController::class, 'create'])->name('class
 Route::get('/materials/create', [MaterialsController::class, 'create'])->name('materials.create');
 
 Route::post('/materials', [MaterialsController::class, 'store'])->name('materials.store');
+
+Route::get('/alumni/{id}/edit', [AlumniController::class, 'edit'])->name('alumni.edit');
+Route::put('/alumni/{id}', [AlumniController::class, 'update'])->name('alumni.update');
+
+Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
+Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');

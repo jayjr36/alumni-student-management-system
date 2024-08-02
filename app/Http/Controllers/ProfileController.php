@@ -9,6 +9,8 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\MentorRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProfileController extends Controller
@@ -131,19 +133,29 @@ class ProfileController extends Controller
         return redirect()->back()->with('success', 'Mentorship request ' . $response . '.');
     }
 
-    public function showprofile($guestId)
-    {
-        $user = User::where('guest_id', $guestId)->firstOrFail();
-        
-        // Determine if the user is a student or alumni
-        if (Student::where('id', $guestId)->exists()) {
-            $profile = Student::findOrFail($guestId);
-        } elseif (Alumni::where('id', $guestId)->exists()) {
-            $profile = Alumni::findOrFail($guestId);
-        } else {
-            return response()->json(['error' => 'Profile not found'], 404);
-        }
+public function showprofile($guestId)
+{
+    Log::info("Fetching profile for guestId: $guestId"); // Log request
 
-        return response()->json($profile);
+    $user = User::where('guest_id', $guestId)->first();
+
+    if (!$user) {
+        Log::info("User not found: $guestId"); // Log if user not found
+        return response()->json(['error' => 'User not found'], 404);
     }
+
+    if (Student::where('id', $guestId)->exists()) {
+        $profile = Student::find($guestId);
+    } elseif (Alumni::where('id', $guestId)->exists()) {
+        $profile = Alumni::find($guestId);
+    } else {
+        Log::info("Profile not found for guestId: $guestId"); // Log if profile not found
+        return response()->json(['error' => 'Profile not found'], 404);
+    }
+
+    Log::info("Profile found: ", $profile->toArray()); // Log profile data
+    return response()->json($profile);
+}
+
+
 }

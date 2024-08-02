@@ -30,6 +30,8 @@
                     
                     <td>
                         <a href="{{ route('students.profile', $student->id) }}" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#profileModal{{ $student->id }}">View Profile</a>
+                        <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
+            
                         <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')

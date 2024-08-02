@@ -7,7 +7,7 @@ use App\Models\Material;
 use App\Models\Classes;
 use App\Models\ClassSubscriptions;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Storage;
 
 
 class MaterialsController extends Controller
@@ -20,8 +20,17 @@ class MaterialsController extends Controller
             'class_id' => 'required|exists:classes,id'
         ]);
     
-        // Store the file in the 'public/materials' directory
-        $filePath = $request->file('file')->store('materials', 'public');
+        // Get the file from the request
+        $file = $request->file('file');
+        
+        // Generate a unique file name
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        
+        // Define the path to store the file
+        $filePath = 'materials/' . $fileName;
+        
+        // Store the file in the public disk
+        Storage::disk('public')->put($filePath, file_get_contents($file));
     
         // Create the material entry in the database
         Material::create([
