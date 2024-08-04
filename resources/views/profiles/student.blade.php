@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container col-7 py-5">
-    <div class="card">
+    <div class="card col-7">
         <div class="card-header text-center">
             <h3>{{ $student->name }}</h3>
         </div>
