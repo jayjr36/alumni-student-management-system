@@ -10,7 +10,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-4 text-center">
                     @if ($alumni->profile_picture)
-                        <img src="{{ asset('storage/' . $alumni->profile_picture) }}" class="img-fluid rounded-circle"
+                        <img src="{{ asset('images/profile_pictures/'.$alumni->profile_picture) }}" class="img-fluid rounded-circle"
                             style="max-width: 200px;" alt="Profile Picture">
                     @else
                         <img src="{{ asset('images/default-profile.png') }}" class="img-fluid rounded-circle"

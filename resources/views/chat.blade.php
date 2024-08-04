@@ -8,9 +8,9 @@
             <div id="chat-messages" class="mb-3" style="height: 300px; overflow-y: auto; border: 1px solid #dee2e6; border-radius: .25rem; padding: 1rem;">
                 <!-- Chat messages will be displayed here -->
             </div>
-            <form id="chat-form" class="d-flex" enctype="multipart/form-data">
+            <form id="chat-form" class="d-flex">
                 <input type="text" id="message-input" class="form-control mr-2" placeholder="Type your message">
-                {{-- <input type="file" id="file-input" class="form-control mr-2" /> --}}
+                <!-- Removed file input -->
                 <button type="submit" class="btn btn-primary">Send</button>
             </form>
         </div>
@@ -24,14 +24,10 @@ $(document).ready(function() {
     $('#chat-form').submit(function(e) {
         e.preventDefault();
         var message = $('#message-input').val();
-        var fileInput = $('#file-input')[0].files[0];
         var formData = new FormData();
         formData.append('message', message);
         formData.append('receiver_id', receiver_id);
         formData.append('_token', '{{ csrf_token() }}');
-        if (fileInput) {
-            formData.append('file', fileInput);
-        }
 
         $.ajax({
             url: '{{ route("send-message") }}',
@@ -42,7 +38,6 @@ $(document).ready(function() {
             success: function(response) {
                 console.log('Message sent successfully:', response);
                 $('#message-input').val('');
-                $('#file-input').val('');
                 fetchMessages();
             },
             error: function(xhr, status, error) {
@@ -69,9 +64,6 @@ $(document).ready(function() {
                         messageHtml += ' received">';
                     }
                     messageHtml += '<div class="message-content">' + message.message + '</div>';
-                    if (message.file_url) {
-                        messageHtml += '<div class="message-file"><a href="' + message.file_url + '" target="_blank">View File</a></div>';
-                    }
                     messageHtml += '</div>';
                     $('#chat-messages').append(messageHtml);
                 });

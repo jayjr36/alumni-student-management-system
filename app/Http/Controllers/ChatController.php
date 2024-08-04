@@ -22,21 +22,13 @@ class ChatController extends Controller
         $validated = $request->validate([
             'message' => 'nullable|string',
             'receiver_id' => 'required|integer',
-            'file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
     
-        $fileUrl = null;
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $path = $file->store('chat_files');
-            $fileUrl = Storage::url($path);
-        }
     
         $message = Message::create([
             'sender_id' => auth()->id(),
             'receiver_id' => $validated['receiver_id'],
             'message' => $validated['message'],
-            'file_url' => $fileUrl,
         ]);
     
         return response()->json([
